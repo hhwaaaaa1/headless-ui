@@ -2,7 +2,8 @@
   "name": "headless-ui",
   "packageManager": "yarn@3.5.1",
   "scripts": {
-    "build": "npx rollup -c"
+    "build": "npx rollup -c",
+    "dev": "npx rollup -w -c rollup.dev.config.mjs"
   },
   "devDependencies": {
     "@babel/core": "^7.23.6",
@@ -12,12 +13,18 @@
     "@babel/preset-typescript": "^7.23.3",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-html": "^1.0.3",
     "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-replace": "^5.0.5",
     "@rollup/plugin-typescript": "^11.1.5",
     "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.17",
     "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "rollup": "^4.9.0",
+    "rollup-plugin-livereload": "^2.0.5",
     "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-serve": "^1.1.1",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3"
   },
