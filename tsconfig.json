@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ES6",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "react-jsx",
+    "baseUrl": "./",
+    "declaration": true,
+    "declarationDir": "dist"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}
