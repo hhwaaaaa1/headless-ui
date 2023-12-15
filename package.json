@@ -1,4 +1,10 @@
 {
   "name": "headless-ui",
-  "packageManager": "yarn@3.5.1"
+  "packageManager": "yarn@3.5.1",
+  "scripts": {
+    "build": "npx rollup -c"
+  },
+  "devDependencies": {
+    "rollup": "^4.9.0"
+  }
 }
