@@ -1,5 +1,1 @@
-import { FOO } from './foo';
-
-export default function() {
-  console.log(FOO);
-}
+export * from './components/Test.jsx';
