@@ -12,6 +12,5 @@
     "declaration": true,
     "declarationDir": "dist"
   },
-  "include": ["src", "app.tsx"],
-  "exclude": ["node_modules"]
+  "include": ["src", "app.tsx"]
 }
