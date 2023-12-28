@@ -2,8 +2,11 @@
   "name": "headless-ui",
   "packageManager": "yarn@4.0.2",
   "scripts": {
-    "build": "npx rollup -c",
-    "dev": "npx rollup -w -c rollup.dev.config.mjs"
+    "build": "yarn dlx rollup -c",
+    "dev": "yarn dlx rollup -w -c rollup.dev.config.mjs",
+    "lint": "yarn dlx eslint src/**/*.{ts,tsx} app.tsx",
+    "lint:fix": "yarn dlx eslint --fix src/**/*.{ts,tsx} app.tsx",
+    "prettier": "yarn dlx prettier --write src/**/*.{ts,tsx} app.tsx"
   },
   "devDependencies": {
     "@babel/core": "^7.23.6",
@@ -17,8 +20,21 @@
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-replace": "^5.0.5",
     "@rollup/plugin-typescript": "^11.1.5",
+    "@types/eslint": "^8",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.17",
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "@typescript-eslint/parser": "^6.16.0",
+    "eslint": "^8.0.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-standard-with-typescript": "^43.0.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
+    "eslint-plugin-prettier": "^5.1.2",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.33.2",
+    "prettier": "^3.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rollup": "^4.9.0",
@@ -26,7 +42,7 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-serve": "^1.1.1",
     "tslib": "^2.6.2",
-    "typescript": "^5.3.3"
+    "typescript": "*"
   },
   "peerDependencies": {
     "@babel/runtime": "*",
