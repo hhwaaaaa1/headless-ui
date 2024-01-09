@@ -30,6 +30,8 @@ module.exports = {
   },
   rules: {
     "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-confusing-void-expression": "off",
+    "react/display-name": "off",
     "react/react-in-jsx-scope": "off",
   },
   ignorePatterns: [".eslintrc.js"],
