@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { flushSync } from "react-dom";
 
 export interface ListboxValue {
   id: string;
@@ -54,10 +55,12 @@ export type ListboxRef = Omit<ListboxAction, "setValues" | "focus">;
 export interface ListboxProps {
   children?: React.ReactNode | ((value: ListboxValue) => React.ReactNode);
   defaultSelectedValue?: string | number;
+  onToggle?: (opened: boolean) => void;
+  onSelect?: (value: string | number) => void;
 }
 
 export const Listbox = forwardRef<ListboxRef, ListboxProps>(
-  ({ children, defaultSelectedValue }, ref) => {
+  ({ children, defaultSelectedValue, onToggle, onSelect }, ref) => {
     const id = useId();
     const values = useRef<Array<string | number>>([]);
     const [opened, setOpened] = useState(false);
@@ -84,24 +87,37 @@ export const Listbox = forwardRef<ListboxRef, ListboxProps>(
         setValues: (_values: Array<string | number>) => {
           values.current = _values;
         },
-        open: () => setOpened(true),
-        close: () => setOpened(false),
-        toggle: () => setOpened((s) => !s),
+        open: () => {
+          setOpened(true);
+          onToggle?.(true);
+        },
+        close: () => {
+          setOpened(false);
+          onToggle?.(false);
+        },
+        toggle: () => {
+          let opened: boolean;
+          flushSync(() => setOpened((s) => (opened = !s)));
+          onToggle?.(opened!);
+        },
         focus: setFocusedIndex,
-        select: setSelectedValue,
+        select: (value: string | number) => {
+          setSelectedValue(value);
+          onSelect?.(value);
+        },
       }),
-      [],
+      [onToggle, onSelect],
     );
 
     useImperativeHandle(
       ref,
       () => ({
-        open: () => setOpened(true),
-        close: () => setOpened(false),
-        toggle: () => setOpened((s) => !s),
-        select: setSelectedValue,
+        open: action.open,
+        close: action.close,
+        toggle: action.toggle,
+        select: action.select,
       }),
-      [],
+      [action],
     );
 
     return (

@@ -3,6 +3,7 @@ import {
   createContext,
   forwardRef,
   isValidElement,
+  useCallback,
   useContext,
   useId,
   useImperativeHandle,
@@ -87,15 +88,21 @@ export type TabRef =
   | undefined;
 
 export type TabProps = {
-  defaultSelectedIndex?: number;
   children?:
     | React.ReactNode
     | ((value: Omit<TabValue, "index">) => React.ReactNode);
+  defaultSelectedIndex?: number;
+  onSelect?: (index: number) => void;
 } & Omit<JSX.IntrinsicElements["div"], "role" | "children">;
 
 export const Tab = forwardRef<TabRef, TabProps>(
   (
-    { children, defaultSelectedIndex = DEFAULT_SELECTED_INDEX, ...props },
+    {
+      children,
+      defaultSelectedIndex = DEFAULT_SELECTED_INDEX,
+      onSelect,
+      ...props
+    },
     ref,
   ) => {
     const el = useRef<HTMLDivElement>(null);
@@ -104,13 +111,18 @@ export const Tab = forwardRef<TabRef, TabProps>(
 
     const value = useMemo(() => ({ id, selectedIndex }), [id, selectedIndex]);
 
+    const select = useCallback((index: number) => {
+      setSelectedIndex(index);
+      onSelect?.(index);
+    }, []);
+
     useImperativeHandle(
       ref,
       () => ({
         el: el.current,
-        select: setSelectedIndex,
+        select,
       }),
-      [],
+      [select],
     );
 
     return (
@@ -129,7 +141,7 @@ export const Tab = forwardRef<TabRef, TabProps>(
                       id={id}
                       index={buttonIndex++}
                       selectedIndex={selectedIndex}
-                      select={setSelectedIndex}
+                      select={select}
                     >
                       {child}
                     </TabContextProvider>
@@ -142,7 +154,7 @@ export const Tab = forwardRef<TabRef, TabProps>(
                       id={id}
                       index={panelIndex++}
                       selectedIndex={selectedIndex}
-                      select={setSelectedIndex}
+                      select={select}
                     >
                       {child}
                     </TabContextProvider>

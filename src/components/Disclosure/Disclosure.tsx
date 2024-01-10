@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { flushSync } from "react-dom";
 
 const DEFAULT_OPENED = true as const;
 
@@ -51,21 +52,32 @@ export type DisclosureRef = DisclosureAction | undefined;
 export interface DisclosureProps {
   children?: React.ReactNode | ((value: DisclosureValue) => React.ReactNode);
   defaultOpened?: boolean;
+  onToggle?: (opened: boolean) => void;
 }
 
 export const Disclosure = forwardRef<DisclosureRef, DisclosureProps>(
-  ({ children, defaultOpened = DEFAULT_OPENED }, ref) => {
+  ({ children, defaultOpened = DEFAULT_OPENED, onToggle }, ref) => {
     const id = useId();
     const [opened, setOpened] = useState(defaultOpened);
 
     const value = useMemo(() => ({ id, opened }), [opened]);
     const action = useMemo(
       () => ({
-        open: () => setOpened(true),
-        close: () => setOpened(false),
-        toggle: () => setOpened((s) => !s),
+        open: () => {
+          setOpened(true);
+          onToggle?.(true);
+        },
+        close: () => {
+          setOpened(false);
+          onToggle?.(false);
+        },
+        toggle: () => {
+          let opened: boolean;
+          flushSync(() => setOpened((s) => (opened = !s)));
+          onToggle?.(opened!);
+        },
       }),
-      [],
+      [onToggle],
     );
 
     useImperativeHandle(ref, () => action, []);

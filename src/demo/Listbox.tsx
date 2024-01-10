@@ -2,7 +2,7 @@ import { Listbox } from "src/components/Listbox";
 
 export function ListboxDemo() {
   return (
-    <Listbox>
+    <Listbox onToggle={console.log} onSelect={console.log}>
       {({ focusedIndex, selectedValue }) => (
         <>
           <Listbox.Button>{selectedValue ?? "SELECT"}</Listbox.Button>

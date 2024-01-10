@@ -2,7 +2,7 @@ import { Tab } from "src/components/Tab";
 
 export function TabDemo() {
   return (
-    <Tab>
+    <Tab onSelect={console.log}>
       <Tab.Button>button1</Tab.Button>
       <Tab.Button>button2</Tab.Button>
       <Tab.Button>button3</Tab.Button>
