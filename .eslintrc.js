@@ -30,6 +30,7 @@ module.exports = {
   },
   rules: {
     "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/non-nullable-type-assertion-style": "off",
     "@typescript-eslint/no-confusing-void-expression": "off",
     "react/display-name": "off",
     "react/react-in-jsx-scope": "off",
