@@ -28,9 +28,9 @@ type ListboxOptionsProps = {
 
 export function ListboxOptions({ children, ...props }: ListboxOptionsProps) {
   const { id, opened } = useListboxValue();
-  const { setValues } = useListboxAction();
+  const { setOptionValues } = useListboxAction();
 
-  setValues(
+  setOptionValues(
     Children.toArray(children).reduce<Array<string | number>>((acc, child) => {
       if (isValidElement(child)) {
         return [...acc, child.props.value];

@@ -12,8 +12,8 @@ import { flushSync } from "react-dom";
 
 export interface ListboxValue {
   id: string;
-  values: Array<string | number>;
-  size: number;
+  optionValues: Array<string | number>;
+  optionSize: number;
   opened: boolean;
   focusedIndex: number;
   selectedValue: string | number | undefined;
@@ -30,7 +30,7 @@ export const useListboxValue = () => {
 };
 
 interface ListboxAction {
-  setValues: (values: Array<string | number>) => void;
+  setOptionValues: (values: Array<string | number>) => void;
   open: () => void;
   close: () => void;
   toggle: () => void;
@@ -50,7 +50,7 @@ export const useListboxAction = () => {
   return action;
 };
 
-export type ListboxRef = Omit<ListboxAction, "setValues" | "focus">;
+export type ListboxRef = Omit<ListboxAction, "setOptionValues" | "focus">;
 
 export interface ListboxProps {
   children?: React.ReactNode | ((value: ListboxValue) => React.ReactNode);
@@ -62,7 +62,7 @@ export interface ListboxProps {
 export const Listbox = forwardRef<ListboxRef, ListboxProps>(
   ({ children, defaultSelectedValue, onToggle, onSelect }, ref) => {
     const id = useId();
-    const values = useRef<Array<string | number>>([]);
+    const optionValues = useRef<Array<string | number>>([]);
     const [opened, setOpened] = useState(false);
     const [focusedIndex, setFocusedIndex] = useState(0);
 
@@ -73,8 +73,8 @@ export const Listbox = forwardRef<ListboxRef, ListboxProps>(
     const value = useMemo(
       () => ({
         id,
-        values: values.current,
-        size: values.current.length,
+        optionValues: optionValues.current,
+        optionSize: optionValues.current.length,
         opened,
         focusedIndex,
         selectedValue,
@@ -84,8 +84,8 @@ export const Listbox = forwardRef<ListboxRef, ListboxProps>(
 
     const action = useMemo(
       () => ({
-        setValues: (_values: Array<string | number>) => {
-          values.current = _values;
+        setOptionValues: (_values: Array<string | number>) => {
+          optionValues.current = _values;
         },
         open: () => {
           setOpened(true);

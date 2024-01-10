@@ -15,14 +15,14 @@ type ListboxButtonProps = Omit<
 
 export function ListboxButton({ children, ...props }: ListboxButtonProps) {
   const el = useRef<HTMLButtonElement>(null);
-  const { id, values, size, opened, focusedIndex, selectedValue } =
+  const { id, optionValues, optionSize, opened, focusedIndex, selectedValue } =
     useListboxValue();
   const { open, close, toggle, focus, select } = useListboxAction();
 
   const handleKeydown = (e: KeyboardEvent) => {
     if (e.key === "Enter" || e.key === " ") {
       if (opened) {
-        select(values[focusedIndex]);
+        select(optionValues[focusedIndex]);
       }
     }
     if (e.key === "ArrowDown") {
@@ -30,7 +30,7 @@ export function ListboxButton({ children, ...props }: ListboxButtonProps) {
       if (!opened) {
         open();
       } else {
-        focus(Math.min(focusedIndex + 1, size - 1));
+        focus(Math.min(focusedIndex + 1, optionSize - 1));
       }
     }
     if (e.key === "ArrowUp") {
